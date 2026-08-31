@@ -48,7 +48,7 @@ def check_env_vars() -> List[str]:
 
 
 # =====MODELS / EMBEDDINGS (created once, reused across sessions)=====
-model = ChatMistralAI(model="mistral-large-latest", temperature=0.3)
+model = ChatMistralAI(model="mistral-small-latest", temperature=0.3)
 router = ChatMistralAI(model="ministral-8b-latest", temperature=0.2)
 conditional_model = ChatMistralAI(model="mistral-small-latest", temperature=0.2)
 
