@@ -48,21 +48,9 @@ def check_env_vars() -> List[str]:
 
 
 # =====MODELS / EMBEDDINGS (created once, reused across sessions)=====
-model = ChatGroq(
-    model="qwen/qwen3.8-27b",
-    api_key=os.environ.get("GROQ_API_KEY"),
-    temperature=0.7,
-)
-router = ChatGroq(
-    model="qwen/qwen3.8-27b",
-    api_key=os.environ.get("GROQ_API_KEY"),
-    temperature=0.3,
-)
-conditional_model = ChatGroq(
-    model="qwen/qwen3.8-27b",
-    api_key=os.environ.get("GROQ_API_KEY"),
-    temperature=0.7,
-)
+model = ChatGroq(model="qwen/qwen3.8-27b", temperature=0.3)  # Routing & answer
+router = ChatGroq(model="qwen/qwen3.8-27b", temperature=0.2)  # Routing strict
+conditional_model = ChatGroq(model="qwen/qwen3.8-27b", temperature=0.3)  # Rewriting
 
 
 
