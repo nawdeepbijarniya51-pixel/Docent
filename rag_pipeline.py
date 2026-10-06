@@ -17,7 +17,7 @@ from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.runnables import RunnableLambda, RunnableParallel, RunnableBranch
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import trim_messages
-from langchain_mistralai import MistralAIEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_groq import ChatGroq
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -64,7 +64,11 @@ conditional_model = ChatGroq(
     temperature=0.7,
 )
 
-dense_embeddings = MistralAIEmbeddings(model="mistral-embed")
+dense_embeddings = HuggingFaceEndpointEmbeddings(
+    model="BAAI/bge-m3", 
+    task="feature-extraction",
+    huggingfacehub_api_token="your_free_hf_token_here"
+)
 sparse_embeddings = FastEmbedSparse(model_name="Qdrant/bm25")
 
 qdrant_client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
