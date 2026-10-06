@@ -17,8 +17,8 @@ from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.runnables import RunnableLambda, RunnableParallel, RunnableBranch
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import trim_messages
-
-from langchain_mistralai import MistralAIEmbeddings, ChatMistralAI
+from langchain_mistralai import MistralAIEmbeddings
+from langchain_groq import ChatGroq
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_qdrant import QdrantVectorStore, RetrievalMode, FastEmbedSparse
@@ -33,7 +33,7 @@ QDRANT_URL = os.getenv(
 )
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
-REQUIRED_ENV_VARS = ["MISTRAL_API_KEY", "COHERE_API_KEY", "QDRANT_API_KEY"]
+REQUIRED_ENV_VARS = ["GROQ_API_KEY", "COHERE_API_KEY", "QDRANT_API_KEY"]
 
 # Cohere sunset rerank-multilingual-v2.0 on 2025-12-01; rerank-v3.5 is itself
 # being phased out (deprecated 2026-07-01, fully redirected 2026-08-01), so we
@@ -48,9 +48,21 @@ def check_env_vars() -> List[str]:
 
 
 # =====MODELS / EMBEDDINGS (created once, reused across sessions)=====
-model = ChatMistralAI(model="mistral-small-latest", temperature=0.3)
-router = ChatMistralAI(model="ministral-8b-latest", temperature=0.2)
-conditional_model = ChatMistralAI(model="mistral-small-latest", temperature=0.2)
+model = ChatGroq(
+    model="qwen/qwen3.8-27b",
+    api_key=os.environ.get("GROQ_API_KEY"),
+    temperature=0.7,
+)
+router = ChatGroq(
+    model="qwen/qwen3.8-27b",
+    api_key=os.environ.get("GROQ_API_KEY"),
+    temperature=0.3,
+)
+conditional_model = ChatGroq(
+    model="qwen/qwen3.8-27b",
+    api_key=os.environ.get("GROQ_API_KEY"),
+    temperature=0.7,
+)
 
 dense_embeddings = MistralAIEmbeddings(model="mistral-embed")
 sparse_embeddings = FastEmbedSparse(model_name="Qdrant/bm25")
