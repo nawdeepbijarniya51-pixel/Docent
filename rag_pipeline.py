@@ -77,11 +77,10 @@ qdrant_client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
 
 
 def get_model_config() -> dict:
-    """Real model identifiers actually in use — for the UI's 'Model configuration' panel."""
     return {
-        "embedding_model": getattr(dense_embeddings, "model", "mistral-embed"),
-        "llm_model": getattr(model, "model", "mistral-large-latest"),
-        "router_model": getattr(router, "model", "ministral-8b-latest"),
+        "embedding_model": getattr(dense_embeddings, "model", "BAAI/bge-m3"),
+        "llm_model": getattr(model, "model", "qwen/qwen3.8-27b"),
+        "router_model": getattr(router, "model", "qwen/qwen3.8-27b"),
         "rerank_model": COHERE_RERANK_MODEL,
     }
 
