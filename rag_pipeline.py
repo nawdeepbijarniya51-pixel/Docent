@@ -33,7 +33,7 @@ QDRANT_URL = os.getenv(
 )
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
-REQUIRED_ENV_VARS = ["GROQ_API_KEY", "COHERE_API_KEY", "QDRANT_API_KEY"]
+REQUIRED_ENV_VARS = ["GROQ_API_KEY", "COHERE_API_KEY", "QDRANT_API_KEY", "HF_API_TOKEN"]
 
 # Cohere sunset rerank-multilingual-v2.0 on 2025-12-01; rerank-v3.5 is itself
 # being phased out (deprecated 2026-07-01, fully redirected 2026-08-01), so we
@@ -64,10 +64,12 @@ conditional_model = ChatGroq(
     temperature=0.7,
 )
 
+
+
 dense_embeddings = HuggingFaceEndpointEmbeddings(
     model="BAAI/bge-m3", 
     task="feature-extraction",
-    huggingfacehub_api_token="your_free_hf_token_here"
+    huggingfacehub_api_token=os.getenv("HF_API_TOKEN")
 )
 sparse_embeddings = FastEmbedSparse(model_name="Qdrant/bm25")
 
