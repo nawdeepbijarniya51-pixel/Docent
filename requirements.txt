@@ -9,10 +9,10 @@ pydantic
 langchain-core
 langchain-classic      # ContextualCompressionRetriever now lives here (langchain v1.x split)
 langchain-community    # PyPDFLoader
-langchain-text-splitters
-langchain-mistralai    # ChatMistralAI, MistralAIEmbeddings
+langchain-text-splitters  
 langchain-cohere       # CohereRerank
 langchain-qdrant       # QdrantVectorStore, RetrievalMode, FastEmbedSparse
+langchain-groq
 
 # --- Vector store / embeddings backends ---
 qdrant-client
