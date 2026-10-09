@@ -1173,7 +1173,7 @@ const backendStatusText = document.getElementById('backendStatusText');
 async function checkBackendHealth(){
   try{
     const res = await fetch(ENDPOINTS.health);
-    const ok = res.ok;
+    const ok = res.status;
     state.backendReachable = ok;
     backendStatusDot.style.background = ok ? 'var(--success)' : 'var(--danger)';
     backendStatusText.textContent = ok ? 'Backend online' : 'Backend error';
