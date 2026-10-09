@@ -17,7 +17,7 @@ from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.runnables import RunnableLambda, RunnableParallel, RunnableBranch
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import trim_messages
-from sentence_transformers import SentenceTransformer
+from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain_groq import ChatGroq
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -54,7 +54,9 @@ conditional_model = ChatGroq(model="qwen/qwen3.8-27b", temperature=0.3)  # Rewri
 
 
 
-dense_embeddings = SentenceTransformer('BAAI/bge-small-en-v1.5')
+dense_embeddings = FastEmbedEmbeddings(
+    model_name="BAAI/bge-small-en-v1.5"
+)
 sparse_embeddings = FastEmbedSparse(model_name="Qdrant/bm25")
 
 qdrant_client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
