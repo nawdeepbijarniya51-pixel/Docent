@@ -4,7 +4,6 @@ uvicorn[standard]
 python-multipart      # required by FastAPI for UploadFile/File(...) form parsing
 python-dotenv
 pydantic
-sentence-transformers
 # --- LangChain core + integrations (rag_pipeline.py) ---
 langchain-core
 langchain-classic      # ContextualCompressionRetriever now lives here (langchain v1.x split)
@@ -13,7 +12,6 @@ langchain-text-splitters
 langchain-cohere       # CohereRerank
 langchain-qdrant       # QdrantVectorStore, RetrievalMode, FastEmbedSparse
 langchain-groq
-langchain_huggingface
 # --- Vector store / embeddings backends ---
 qdrant-client
 fastembed              # backs FastEmbedSparse (BM25 sparse embeddings)
