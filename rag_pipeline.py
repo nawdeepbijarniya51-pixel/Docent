@@ -17,7 +17,7 @@ from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.runnables import RunnableLambda, RunnableParallel, RunnableBranch
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import trim_messages
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from sentence_transformers import SentenceTransformer
 from langchain_groq import ChatGroq
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -33,7 +33,7 @@ QDRANT_URL = os.getenv(
 )
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
-REQUIRED_ENV_VARS = ["GROQ_API_KEY", "COHERE_API_KEY", "QDRANT_API_KEY", "HF_API_TOKEN"]
+REQUIRED_ENV_VARS = ["GROQ_API_KEY", "COHERE_API_KEY", "QDRANT_API_KEY"]
 
 # Cohere sunset rerank-multilingual-v2.0 on 2025-12-01; rerank-v3.5 is itself
 # being phased out (deprecated 2026-07-01, fully redirected 2026-08-01), so we
@@ -54,11 +54,7 @@ conditional_model = ChatGroq(model="qwen/qwen3.8-27b", temperature=0.3)  # Rewri
 
 
 
-dense_embeddings = HuggingFaceEndpointEmbeddings(
-    model="BAAI/bge-m3", 
-    task="feature-extraction",
-    huggingfacehub_api_token=os.getenv("HF_API_TOKEN")
-)
+dense_embeddings = SentenceTransformer('BAAI/bge-small-en-v1.5')
 sparse_embeddings = FastEmbedSparse(model_name="Qdrant/bm25")
 
 qdrant_client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
